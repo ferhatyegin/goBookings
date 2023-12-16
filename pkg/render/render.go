@@ -6,37 +6,46 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/ferhatyegin/goBookings/pkg/config"
 )
+
+var app *config.AppConfig
+
+// Newtemplates sets the config for the template package
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
 
 // RenderTemplate is where program parses HTML templates and it's content to be written by the response writer
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	//Create a template cache
-	tc, err := createTemplateCache()
-	if err != nil {
-		log.Fatal(err)
+	var tc map[string]*template.Template
+
+	if app.UseCache {
+		//Get the template cache from the AppConfig
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreateTemplateCache()
 	}
 
 	//Get requested template from cache
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Fatal(err)
+		log.Fatal("could not get template from template cache")
 	}
 
 	buf := new(bytes.Buffer)
-	err = t.Execute(buf, nil)
-	if err != nil {
-		log.Println(err)
-	}
+
+	_ = t.Execute(buf, nil)
 
 	//Render the template
-	_, err = buf.WriteTo(w)
-
+	_, err := buf.WriteTo(w)
 	if err != nil {
-		log.Println(err)
+		log.Println("error while writing template to browser", err)
 	}
 }
 
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 
 	//Get all of the files named *.page.tmpl from ./templates
