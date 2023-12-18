@@ -4,38 +4,41 @@ import (
 	"net/http"
 
 	"github.com/ferhatyegin/goBookings/pkg/config"
+	"github.com/ferhatyegin/goBookings/pkg/models"
 	"github.com/ferhatyegin/goBookings/pkg/render"
 )
 
-//Repo repository used by the handlers
+// Repo repository used by the handlers
 var Repo *Repository
 
-//Repository is the repository type
-type Repository struct{
+// Repository is the repository type
+type Repository struct {
 	App *config.AppConfig
 }
 
-//NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository{
+// NewRepo creates a new repository
+func NewRepo(a *config.AppConfig) *Repository {
 	return &Repository{
 		App: a,
 	}
 }
 
-//NewHandlers sets the repository for the handlers
-func NewHandlers(r *Repository){
+// NewHandlers sets the repository for the handlers
+func NewHandlers(r *Repository) {
 	Repo = r
 }
 
 // Home is the home page handler
-func  (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.tmpl")
+func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About is the about page handler
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "about.page.tmpl")
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello again !"
+
+	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
 }
-
-
-
