@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/alexedwards/scs/v2"
 	"github.com/ferhatyegin/goBookings/pkg/config"
 	"github.com/ferhatyegin/goBookings/pkg/handlers"
 	"github.com/ferhatyegin/goBookings/pkg/render"
@@ -12,9 +14,21 @@ import (
 
 const portNumber = ":8080"
 
-// main is the main application function
+var app config.AppConfig
+var session *scs.SessionManager
+
+// Main is the main application function
 func main() {
-	var app config.AppConfig
+	// Change this to true when in production
+	app.InProduction = false
+
+	session = scs.New()
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	session.Cookie.Secure = app.InProduction
+
+	app.Session = session
 
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
