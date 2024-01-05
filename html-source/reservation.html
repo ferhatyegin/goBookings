@@ -118,6 +118,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
     <script src="https://unpkg.com/notie"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         (function () {
             'use strict';
@@ -138,7 +139,8 @@
         })();
 
         document.getElementById("colorButton").addEventListener("click", function () {
-            notify("This is my message", "success")
+            //notify("This is my message", "success")
+            notifyModal("title", "<em>Hello world</em>", "success", "OK")
         });
 
         const elem = document.getElementById('reservation-dates');
@@ -153,7 +155,15 @@
                 //stay: Boolean, // optional, default = false
                 //time: Number, // optional, default = 3, minimum = 1,
                 //position: String // optional, default = 'top', enum: ['top', 'bottom']
-            })
+            });
+        }
+        function notifyModal(title, text, icon, confirmButtonText){
+            Swal.fire({
+            title: title,
+            html: text,
+            icon: icon,
+            confirmButtonText: confirmButtonText
+        });
         }
 
     </script>
