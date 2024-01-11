@@ -48,3 +48,43 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 		StringMap: stringMap,
 	})
 }
+
+// Reservation is the make-reservation room page handler
+func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+
+	render.RenderTemplate(w, "make-reservation.page.tmpl", &models.TemplateData{})
+}
+
+// Availability is the search-availability page handler
+func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+
+	render.RenderTemplate(w, "search-availability.page.tmpl", &models.TemplateData{})
+}
+
+// Contact is contact page handler
+func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+
+	render.RenderTemplate(w, "contact.page.tmpl", &models.TemplateData{})
+}
+
+// Generals is the generals-quarters room page handler
+func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+
+	render.RenderTemplate(w, "generals.page.tmpl", &models.TemplateData{})
+}
+
+// Majors is the majors-suite room page handler
+func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+
+	render.RenderTemplate(w, "majors.page.tmpl", &models.TemplateData{})
+}
