@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/ferhatyegin/goBookings/internal/config"
+	"github.com/ferhatyegin/goBookings/internal/forms"
 	"github.com/ferhatyegin/goBookings/internal/models"
 	"github.com/ferhatyegin/goBookings/internal/render"
 )
@@ -43,7 +44,14 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 // Reservation is the make-reservation room page handler
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+// PostReservation handles the posting of a reservation form
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+
 }
 
 // Availability is the search-availability page handler
