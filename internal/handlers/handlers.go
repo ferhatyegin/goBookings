@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ferhatyegin/goBookings/pkg/config"
-	"github.com/ferhatyegin/goBookings/pkg/models"
-	"github.com/ferhatyegin/goBookings/pkg/render"
+	"github.com/ferhatyegin/goBookings/internal/config"
+	"github.com/ferhatyegin/goBookings/internal/models"
+	"github.com/ferhatyegin/goBookings/internal/render"
 )
 
 // Repo repository used by the handlers
